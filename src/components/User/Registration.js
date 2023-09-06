@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import avatar from '../../images/avatar.png';
 import register from '../../images/register.svg';
 import './Registration.css';
@@ -13,6 +13,7 @@ function Registration() {
         avatar: "",
     });
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleRegistrationInput = (e) => {
         setRegistrationInfo((prevState) => {
@@ -57,6 +58,7 @@ function Registration() {
             const isFoundUsername = db.users.find(user=>user.username === registrationInfo.username);
             if(isFoundUsername){
                 setError("Username already exists!");
+                return;
             }else{
                 setError("");
                 const users = [...db.users, registrationInfo];
@@ -67,6 +69,7 @@ function Registration() {
             localStorage.setItem("collaborative-management-app", JSON.stringify({users: [{...registrationInfo}]}));    
         }
         
+        navigate("/home");
     }
 
     return (
@@ -100,7 +103,7 @@ function Registration() {
                             <input type="submit" value="Sign Up" />
                         </div>
                         {error && <div className="error">{error}</div>}
-                        <p>Already have an account? <Link to="/registration">Log In</Link></p>
+                        <p>Already have an account? <Link to="/login">Log In</Link></p>
                     </form>
                 </div>
                 <div className="registrationImg">
