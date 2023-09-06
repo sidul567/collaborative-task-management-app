@@ -68,7 +68,7 @@ function Login() {
                             <input type="submit" value="Login" />
                         </div>
                         {error && <div className="error">{error}</div>}
-                        <p>Don't have an account? <Link to="/register">Sign Up</Link></p>
+                        <p>Don't have an account? <Link to="/">Sign Up</Link></p>
                     </form>
                 </div>
                 <div className="loginImg">

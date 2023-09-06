@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs-react";
 function Registration() {
     const [registrationInfo, setRegistrationInfo] = useState({
         username: "",
-        email: "",
+        bio: "",
         password: "",
         avatar: "",
     });
@@ -83,8 +83,8 @@ function Registration() {
                             <input type="text" name="username" placeholder='John_Doe' onChange={handleRegistrationInput} required />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email" placeholder='abc@gmail.com' onChange={handleRegistrationInput} required />
+                            <label htmlFor="email">BIO</label>
+                            <textarea type="text" name="bio" placeholder='Enter your BIO' rows={3} onChange={handleRegistrationInput} required />
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
