@@ -1,0 +1,36 @@
+.registrationContainer{
+    display: flex;
+    padding: 100px;
+    /* background-image: linear-gradient(to right bottom, #220092, #5133ae, #775cc9, #9c85e4, #c2b0ff); */
+}
+
+.registrationWrapper{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #fff;
+    padding: 100px;
+    width: 100%;
+    border-radius: 10px;
+    gap: 20px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.registrationContainer .registrationInfo{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+    padding: 30px;
+    width: 50%;
+}
+
+.registrationContainer .registrationInfo h3{
+    font-size: 25px;
+    margin-bottom: 30px;
+}
+
+.registrationContainer .registrationImg{
+    align-self: center;
+    width: 40%;
+}
+
+.registrationContainer .registrationImg img{
+    width: 300px;
+}
