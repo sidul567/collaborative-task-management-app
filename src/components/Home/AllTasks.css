@@ -3,6 +3,7 @@
     margin: auto;
     display: flex;
     flex-direction: column;
+    padding-top: 20px;
 }
 
 table {
@@ -22,6 +23,19 @@ table {
     text-align: left;
   }
 
+  td{
+    font-weight: 500;
+  }
+
+  td.button{
+    cursor: pointer;
+  }
+
+  td svg{
+    cursor: pointer;
+    margin-right: 5px;
+  }
+
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
@@ -31,6 +45,6 @@ table {
   }
 
   th {
-    background-color: #4CAF50;
+    background-color: #110095;
     color: white;
   }

@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './SearchBox.css';
 import { AuthContext } from '../../context/AuthContext';
 import { generateID } from '../Utils/generateID';
+import AllTasks from './AllTasks';
 
 function SearchBox() {
     const [search, setSearch] = useState("");
@@ -19,13 +20,14 @@ function SearchBox() {
         due_date: "",
         priority: "",
         createdBy: "",
+        status: "Processing",
     })
     const [tasks, setTasks] = useState(db.tasks || []);
 
     // Add username to task
-    useEffect(()=>{
-        setTask((prevTask)=>{
-            return {...prevTask, createdBy: user && user.username}
+    useEffect(() => {
+        setTask((prevTask) => {
+            return { ...prevTask, createdBy: user && user.username }
         })
     }, [user])
 
@@ -52,61 +54,66 @@ function SearchBox() {
 
     const handleTaskSubmit = (e) => {
         e.preventDefault();
-        setTasks([...tasks, {...task, id: generateID()}]);
+        setTasks([...tasks, { ...task, id: generateID() }]);
         handleClose();
     }
 
-    useEffect(()=>{
-        localStorage.setItem("collaborative-management-app", JSON.stringify({...db, tasks}));
-    }, [tasks])
+    useEffect(() => {
+        localStorage.setItem("collaborative-management-app", JSON.stringify({ ...db, tasks }));
+    }, [tasks, db])
 
     return (
-        <div className='searchBox'>
-            <div className='search-field'>
-                <TextField variant='outlined' fullWidth size='small' label="Search..." InputProps={{ endAdornment: <InputAdornment position="end"><Search /></InputAdornment>, }} />
+        <>
+            <div className='searchBox'>
+                <div className='search-field'>
+                    <TextField variant='outlined' fullWidth size='small' label="Search..." InputProps={{ endAdornment: <InputAdornment position="end"><Search /></InputAdornment>, }} />
+                </div>
+                <div className="create-task">
+                    <Button variant='outlined' endIcon={<Add />} sx={{ textTransform: "capitalize" }} fullWidth onClick={handleOpen}>Create Task</Button>
+                </div>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" variant="h5" sx={{ fontWeight: 700 }}>
+                            Task
+                        </Typography>
+                        <Typography id="modal-modal-description" component={"form"} sx={{ mt: 2 }} onSubmit={handleTaskSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="title">Title</label>
+                                <input type="text" name="title" placeholder='Title' onChange={handleTask} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="desc">Description</label>
+                                <input type="text" name="desc" placeholder='Description' onChange={handleTask} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="due_date">Due Date</label>
+                                <input type="date" name="due_date" onChange={handleTask} required />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="priority">Priority</label>
+                                <select name="priority" id="" onChange={handleTask} required>
+                                    <option value="">Select Priority</option>
+                                    <option value="high">High</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="High">Low</option>
+                                </select>
+                            </div>
+                            <div className="form-submit">
+                                <input type="submit" value="Create" />
+                            </div>
+                        </Typography>
+                    </Box>
+                </Modal>
             </div>
-            <div className="create-task">
-                <Button variant='outlined' endIcon={<Add />} sx={{ textTransform: "capitalize" }} fullWidth onClick={handleOpen}>Create Task</Button>
-            </div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h5" sx={{ fontWeight: 700 }}>
-                        Task
-                    </Typography>
-                    <Typography id="modal-modal-description" component={"form"} sx={{ mt: 2 }} onSubmit={handleTaskSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="title">Title</label>
-                            <input type="text" name="title" placeholder='Title' onChange={handleTask} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="desc">Description</label>
-                            <input type="text" name="desc" placeholder='Description' onChange={handleTask} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="due_date">Due Date</label>
-                            <input type="date" name="due_date" onChange={handleTask} required />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="priority">Priority</label>
-                            <select name="priority" id="" onChange={handleTask} required>
-                                <option value="">Select Priority</option>
-                                <option value="high">High</option>
-                                <option value="medium">Medium</option>
-                                <option value="High">Low</option>
-                            </select>
-                        </div>
-                        <div className="form-submit">
-                            <input type="submit" value="Create" />
-                        </div>
-                    </Typography>
-                </Box>
-            </Modal>
-        </div>
+
+            <AllTasks tasks={tasks} />
+        </>
+
     )
 }
 
