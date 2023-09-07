@@ -1,0 +1,16 @@
+.searchBox{
+    padding-top: 50px;
+    display: flex;
+    width: 80%;
+    margin: auto;
+    gap: 20px;
+    align-items: center;
+}
+
+.searchBox .search-field{
+    width: 85%;
+}
+
+.searchBox .create-task{
+    width: 15%;
+}

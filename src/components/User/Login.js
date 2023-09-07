@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs-react";
 function Login() {
     const [loginInfo, setLoginInfo] = useState({
         username: "",
-        email: "",
         password: "",
     });
     const [error, setError] = useState("");
@@ -46,7 +45,8 @@ function Login() {
             setError("User not found!");
             return;
         }
-
+        
+        sessionStorage.setItem("username", loginInfo.username);
         navigate("/home");
     }
 
