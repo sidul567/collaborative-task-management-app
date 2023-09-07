@@ -31,6 +31,65 @@ form{
   gap: 5px;
 }
 
+table {
+  font-family: Arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+td{
+  font-weight: 500;
+}
+
+td.button{
+  cursor: pointer;
+}
+
+td svg{
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tr:hover {
+  background-color: #ddd;
+}
+
+th {
+  background-color: #110095;
+  color: white;
+}
+
+.container{
+  width: 80%;
+  margin: auto;
+}
+
+.title{
+  font-size: 30px;
+  width: 200px;
+  margin: auto;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #110095;
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 .form-group label{
   font-size: 16px;
   font-weight: 600;

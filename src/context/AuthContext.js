@@ -1,25 +1,33 @@
 import React, { createContext, useEffect, useState } from 'react'
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export const AuthContextProvider = ({children})=>{
-    const [user, setUser] = useState("");
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     useEffect(()=>{
+        login();
+    }, [])
+
+    const login = ()=>{
         const currentUserName = sessionStorage.getItem("username");
 
         if(currentUserName){
             const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
             setUser(db.users.find((user)=>user.username === currentUserName))
         }
-    }, [])
+
+        setLoading(false);
+    }
 
     const logout = ()=>{
-        setUser("");
+        setUser(null);
+        sessionStorage.removeItem("username");
     }
     
     return(
-        <AuthContext.Provider value={{user, logout}}>
-            {children}
+        <AuthContext.Provider value={{user, login, logout}}>
+            {!loading && children}
         </AuthContext.Provider>
     )
 }

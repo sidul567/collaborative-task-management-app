@@ -1,0 +1,13 @@
+.user{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user .avatar img{
+    width: 30px;
+}
+
+.user .checkbox{
+    margin-left: auto;
+}

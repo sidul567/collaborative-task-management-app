@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import avatar from '../../images/avatar.png';
 import register from '../../images/register.svg';
 import './Registration.css';
 import bcrypt from "bcryptjs-react";
+import { AuthContext } from '../../context/AuthContext';
 
 function Registration() {
     const [registrationInfo, setRegistrationInfo] = useState({
@@ -14,6 +15,8 @@ function Registration() {
     });
     const [error, setError] = useState("");
     const navigate = useNavigate();
+
+    const {login} = useContext(AuthContext);
 
     const handleRegistrationInput = (e) => {
         setRegistrationInfo((prevState) => {
@@ -69,6 +72,8 @@ function Registration() {
             localStorage.setItem("collaborative-management-app", JSON.stringify({users: [{...registrationInfo}]}));    
         }
         
+        sessionStorage.setItem("username", registrationInfo.username);
+        login();
         navigate("/home");
     }
 

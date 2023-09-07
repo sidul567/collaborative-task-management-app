@@ -3,9 +3,22 @@ import './AllTasks.css';
 import { Delete, Edit, GroupAdd } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
-function AllTasks({tasks}) {
+function AllTasks() {
 
-  const [allTasks, setAllTasks] = useState(tasks);
+  const [allTasks, setAllTasks] = useState([]);
+  useEffect(()=>{
+    const handleStorage = () => {
+        const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
+        setAllTasks(db.tasks || []);
+    }    
+    window.addEventListener('storage', handleStorage)
+
+    const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
+    setAllTasks(db.tasks || []);
+
+    return () => window.removeEventListener('storage', handleStorage())
+}, [])
+
   const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
   
   const updateStatus = (taskId, taskStatus)=>{
@@ -20,6 +33,7 @@ function AllTasks({tasks}) {
   }
   return (
     <div className='tasks'>
+        <h3>All Tasks</h3>
         <table>
             <thead>
                 <tr>
@@ -35,8 +49,8 @@ function AllTasks({tasks}) {
             </thead>
             <tbody>
                 {
-                    allTasks.map((task)=>(
-                        <tr>
+                    allTasks.map((task, index)=>(
+                        <tr key={index}>
                             <td>{task.id}</td>
                             <td>{task.title}</td>
                             <td>{task.desc}</td>

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import login from '../../images/login.svg';
+import loginImg from '../../images/login.svg';
 import './Login.css';
 import bcrypt from "bcryptjs-react";
+import { AuthContext } from '../../context/AuthContext';
 
 function Login() {
     const [loginInfo, setLoginInfo] = useState({
@@ -10,6 +11,9 @@ function Login() {
         password: "",
     });
     const [error, setError] = useState("");
+
+    const {login} = useContext(AuthContext);
+
     const navigate = useNavigate();
 
     const handleLoginInput = (e) => {
@@ -45,8 +49,9 @@ function Login() {
             setError("User not found!");
             return;
         }
-        
+
         sessionStorage.setItem("username", loginInfo.username);
+        login();
         navigate("/home");
     }
 
@@ -72,7 +77,7 @@ function Login() {
                     </form>
                 </div>
                 <div className="loginImg">
-                    <img src={login} alt="Login" />
+                    <img src={loginImg} alt="Login" />
                 </div>
             </div>
         </div>

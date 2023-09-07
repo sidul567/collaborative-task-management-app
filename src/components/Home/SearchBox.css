@@ -8,9 +8,13 @@
 }
 
 .searchBox .search-field{
-    width: 85%;
+    width: 70%;
 }
 
 .searchBox .create-task{
+    width: 15%;
+}
+
+.searchBox .create-team{
     width: 15%;
 }
