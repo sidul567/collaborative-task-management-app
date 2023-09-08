@@ -10,6 +10,7 @@ import ManageTask from './components/Home/ManageTask';
 import 'react-toastify/dist/ReactToastify.css';
 import Toaster from './components/Toaster/Toaster';
 import Profile from './components/Profile/Profile';
+import NotFound from './components/NotFound/NotFound';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route exact path='task/:id' element={<ManageTask />} />
               <Route exact path='invitation/:username' element={<Invitation />} />
             </Route>
+            <Route path='*' element={<NotFound />} />
         </Routes>
     </BrowserRouter>
   );
