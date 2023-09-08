@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { AuthContext } from '../../context/AuthContext';
 import AssignMember from './AssignMember';
 
-function AllTasks() {
+function AllTasks({status}) {
 
     const { user } = useContext(AuthContext);
     const [allTasks, setAllTasks] = useState([]);
@@ -21,21 +21,35 @@ function AllTasks() {
         setTaskID("");
     }
 
-
     useEffect(() => {
         const handleStorage = () => {
             const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
-            setAllTasks(db?.tasks?.filter((task) => task.createdBy === user.username || task.assigned.members.includes(user.username)) || []);
+
+            const filteredTask = db?.tasks?.filter((task) =>{
+                const match = task.createdBy === user.username || task.assigned.members.includes(user.username);
+
+                return (match && status === "All") || (match && task.status === status);
+            }) || [];
+
+            setAllTasks(filteredTask);
+            
         }
         window.addEventListener('storage', handleStorage)
 
         handleStorage();
 
         return () => window.removeEventListener('storage', handleStorage())
-    }, [user.username])
+    }, [user.username, status]) 
 
     const updateStatus = (taskId, taskStatus) => {
-        const updateTaskStatus = taskStatus === "Processing" ? "Completed" : "Processing";
+        let updateTaskStatus = taskStatus;
+        if(updateTaskStatus === "Pending"){
+            updateTaskStatus = "Processing";
+        }else if(updateTaskStatus === "Processing"){
+            updateTaskStatus = "Completed";
+        }else{
+            updateTaskStatus = "Pending"
+        }
 
         const updatedTasks = allTasks.map((task) =>
             task.id === taskId ? { ...task, status: updateTaskStatus } : task
@@ -51,6 +65,16 @@ function AllTasks() {
             return team.teamName;
         }
         return "";
+    }
+
+    const getTaskColor = (status)=>{
+        if(status === "Pending"){
+            return "error";
+        }else if(status === "Processing"){
+            return "warning";
+        }else{
+            return "success";
+        }
     }
 
     return (
@@ -80,12 +104,13 @@ function AllTasks() {
                                     <td>{task.title}</td>
                                     <td>{task.due_date}</td>
                                     <td>{task.priority}</td>
-                                    <td>
+                                    <td style={{width: "120px"}}>
                                         <Button 
-                                            color={task.status === "Processing" ? 'warning' : 'success'} 
-                                            sx={{ textTransform: "capitalize" }} 
-                                            variant='outlined' 
+                                            color={getTaskColor(task.status)} 
+                                            sx={{ textTransform: "capitalize", maxWidth: "100%", minWidth: "100%" }} 
+                                            variant='contained' 
                                             onClick={() => updateStatus(`${task.id}`, `${task.status}`)} 
+                                            disableElevation
                                         >
                                             {task.status}
                                         </Button>

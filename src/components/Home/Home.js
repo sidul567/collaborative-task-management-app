@@ -8,7 +8,6 @@ function Home() {
     <div className='home'>
         <Header />
         <SearchBox />
-        <AllTasks />
     </div>
   )
 }

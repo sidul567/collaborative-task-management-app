@@ -129,7 +129,8 @@ function AssignMember({ open, handleClose, taskID }) {
                                 value={teamInfo.members}
                                 onChange={handleTeamInput}
                                 name="members"
-                                input={<OutlinedInput id="select-multiple-chip" label="Members" />}
+                                input={<OutlinedInput id="select-multiple-chip" 
+                                label="Members" />}
                                 renderValue={(selected) => (
                                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                         {selected.map((value) => (

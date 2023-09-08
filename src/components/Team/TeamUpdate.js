@@ -97,9 +97,11 @@ function TeamUpdate({open, handleClose, teamID}) {
                             )
                         )
                     }
-                    <div className="form-submit">
+                    {
+                        users.length > 0 ? <div className="form-submit">
                         <input type="submit" value="Invite" />
-                    </div>
+                        </div> : <p>Not found members!</p>
+                    }
                 </Typography>
             </Box>
         </Modal>
