@@ -34,7 +34,7 @@ function Team({open, handleClose, handleTeam}) {
         window.dispatchEvent(new Event('storage'));
 
         setCheckedUserName([]);
-        handleTeam();
+        handleClose();
     }
 
     const style = {

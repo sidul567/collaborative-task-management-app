@@ -29,14 +29,17 @@ function Invitation() {
 
     const handleJoin = (teamID)=>{
         const updatedTeams = db.teams.map((team)=>{
-            const updatedMembers = team.members.map((member) => {
-                if (member.username === user.username) {
-                    return { ...member, status: "joined" };
-                }
-                return member;
-            });
-
-            return { ...team, members: updatedMembers };
+            if(team.teamID === teamID){
+                const updatedMembers = team.members.map((member) => {
+                    if (member.username === user.username) {
+                        return { ...member, status: "joined" };
+                    }
+                    return member;
+                });
+    
+                return { ...team, members: updatedMembers };
+            }
+            return team;
         })
         localStorage.setItem("collaborative-management-app", JSON.stringify({...db, teams: updatedTeams}));
 

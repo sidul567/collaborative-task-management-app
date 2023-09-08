@@ -17,6 +17,7 @@ function Task({open, handleClose, getTask}) {
         due_date: "",
         priority: "",
         createdBy: "",
+        assigned: [],
         status: "Processing",
     })
 
@@ -46,7 +47,7 @@ function Task({open, handleClose, getTask}) {
         const updatedTasks = [...tasks, { ...task, id: generateID() }];
         localStorage.setItem("collaborative-management-app", JSON.stringify({ ...db, tasks: updatedTasks }));
         window.dispatchEvent(new Event('storage'));
-        getTask();
+        handleClose();
     }
 
     useEffect(() => {
@@ -84,9 +85,9 @@ function Task({open, handleClose, getTask}) {
                         <label htmlFor="priority">Priority</label>
                         <select name="priority" id="" onChange={handleTask} required>
                             <option value="" disabled>Select Priority</option>
-                            <option value="high">High</option>
-                            <option value="medium">Medium</option>
-                            <option value="High">Low</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
                         </select>
                     </div>
                     <div className="form-submit">

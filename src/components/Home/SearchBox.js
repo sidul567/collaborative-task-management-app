@@ -2,9 +2,6 @@ import { Add, Search } from '@mui/icons-material';
 import { Box, Button, InputAdornment, Modal, TextField, Typography } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react'
 import './SearchBox.css';
-import { AuthContext } from '../../context/AuthContext';
-import { generateID } from '../Utils/generateID';
-import AllTasks from './AllTasks';
 import Task from './Task';
 import Team from './Team';
 
@@ -16,14 +13,6 @@ function SearchBox() {
     const handleOpenTask = () => setOpenTask(true);
     const handleCloseTeam = () => setOpenTeam(false);
     const handleCloseTask = () => setOpenTask(false);
-
-    const getTask = () => {
-        handleCloseTask();
-    }
-
-    const handleTeam = () => {
-        handleCloseTeam();
-    }
 
     return (
         <>
@@ -37,8 +26,8 @@ function SearchBox() {
                 <div className="create-team">
                     <Button variant='outlined' endIcon={<Add />} sx={{ textTransform: "capitalize" }} color='secondary' fullWidth onClick={handleOpenTeam}>Create Team</Button>
                 </div>
-                <Task open={openTask} handleClose={handleCloseTask} getTask={getTask} />
-                <Team open={openTeam} handleClose={handleCloseTeam} handleTeam={handleTeam} />
+                <Task open={openTask} handleClose={handleCloseTask}/>
+                <Team open={openTeam} handleClose={handleCloseTeam} />
             </div>
         </>
 
