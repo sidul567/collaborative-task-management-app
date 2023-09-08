@@ -44,9 +44,12 @@ function MyTeam() {
     <>
       <Header />
       <h3 className='title'>My Teams</h3>
-      <div className="teams">
+      <>
         {
-          teams && teams.map((team) => (
+          teams.length > 0 ? (
+            <div className="teams">
+        {
+         teams.map((team) => (
             <div className="team" key={team.teamID}>
               <div className="team-name">
                 <h3>
@@ -82,6 +85,9 @@ function MyTeam() {
         }
         <TeamUpdate open={openTeam} handleClose={handleCloseTeam} teamID={teamID} />
       </div>
+          ) : <center><h1 style={{marginTop: "40px"}}>Not found any team!</h1></center>
+        }
+      </>
     </>
   )
 }
