@@ -45,7 +45,19 @@ function Invitation() {
 
         window.dispatchEvent(new Event('storage'));
     }
-    const handleDiscard = () => { }
+    const handleDiscard = (teamID) => { 
+        const updatedTeams = db.teams.map((team) => {
+            if (team.teamID === teamID) {
+                const updatedMembers = team.members.filter((member) => member.username !== user.username);
+
+                return { ...team, members: updatedMembers };
+            }
+            return team;
+        })
+        localStorage.setItem("collaborative-management-app", JSON.stringify({ ...db, teams: updatedTeams }));
+
+        window.dispatchEvent(new Event('storage'));
+    }
 
     return (
         <>
@@ -73,7 +85,7 @@ function Invitation() {
                                                 <td>{invitation.leader}</td>
                                                 <td>
                                                     <Button variant='outlined' color='success' endIcon={<AddCircle />} sx={{ mr: 2 }} onClick={() => handleJoin(invitation.teamID)}>Join</Button>
-                                                    <Button variant='outlined' color='error' endIcon={<Cancel />} onClick={handleDiscard} >Discard</Button>
+                                                    <Button variant='outlined' color='error' endIcon={<Cancel />} onClick={()=>handleDiscard(invitation.teamID)} >Discard</Button>
                                                 </td>
                                             </tr>
                                         ))
