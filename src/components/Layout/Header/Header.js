@@ -31,6 +31,9 @@ function Header() {
     <nav>
         <Link to="/home"><h3>Collaborative Management System</h3></Link>
         <div className="profile">
+            <Link to="/dashboard">
+                <Button variant='outlined' color='inherit' sx={{fontWeight: "600"}}>Dashboard</Button>
+            </Link>
             <Link to="/team">
                 <Button variant='outlined' color='inherit' sx={{fontWeight: "600"}}>Team</Button>
             </Link>

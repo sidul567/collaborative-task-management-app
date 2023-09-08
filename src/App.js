@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Toaster from './components/Toaster/Toaster';
 import Profile from './components/Profile/Profile';
 import NotFound from './components/NotFound/NotFound';
+import Dashboard from './components/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route exact path='home' element={<Home />} />
               <Route exact path='team' element={<MyTeam />} />
               <Route exact path='profile' element={<Profile />} />
+              <Route exact path='dashboard' element={<Dashboard />} />
               <Route exact path='task/:id' element={<ManageTask />} />
               <Route exact path='invitation/:username' element={<Invitation />} />
             </Route>
