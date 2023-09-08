@@ -9,6 +9,8 @@
 
 .searchBox .search-field{
     width: 70%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .searchBox .create-task{

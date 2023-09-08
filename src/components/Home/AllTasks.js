@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import { AuthContext } from '../../context/AuthContext';
 import AssignMember from './AssignMember';
 
-function AllTasks({status}) {
+function AllTasks({status, sortBy, orderBy}) {
 
     const { user } = useContext(AuthContext);
     const [allTasks, setAllTasks] = useState([]);
@@ -31,6 +31,28 @@ function AllTasks({status}) {
                 return (match && status === "All") || (match && task.status === status);
             }) || [];
 
+            filteredTask.sort((task1, task2)=>{
+                const priority = {
+                    "Low": 0,
+                    "Medium": 1,
+                    "High": 2,
+                }
+
+                const priority1 = priority[task1.priority];
+                const priority2 = priority[task2.priority];
+
+                const diffPriority = priority1 - priority2;
+                const diffDueDate = new Date(task1.due_date) -  new Date(task2.due_date);
+
+                if(sortBy === "priority"){
+                    return orderBy === "asc" ? diffPriority : -diffPriority;
+                }else if(sortBy === "dueDate"){
+                    return orderBy === "asc" ? diffDueDate : -diffDueDate;
+                }
+
+                return 0;
+            })
+
             setAllTasks(filteredTask);
             
         }
@@ -39,7 +61,7 @@ function AllTasks({status}) {
         handleStorage();
 
         return () => window.removeEventListener('storage', handleStorage())
-    }, [user.username, status]) 
+    }, [user.username, status, sortBy, orderBy]) 
 
     const updateStatus = (taskId, taskStatus) => {
         let updateTaskStatus = taskStatus;

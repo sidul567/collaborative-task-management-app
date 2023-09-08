@@ -21,7 +21,7 @@ function Task({open, handleClose, getTask}) {
             teamID: "",
             members: [],
         },
-        status: "Processing",
+        status: "Pending",
     })
 
     const style = {
