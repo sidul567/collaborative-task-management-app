@@ -5,6 +5,7 @@
     margin: auto;
     align-items: stretch;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .teams .team{

@@ -36,8 +36,8 @@ function MyTeam() {
   }, [user.username])
 
   const getAvatar = (username)=>{
-    const user = db.users.find((user)=>user.username === username);
-    return user.avatar;
+    const user = db?.users?.find((user)=>user.username === username);
+    return user?.avatar;
   }
 
   return (

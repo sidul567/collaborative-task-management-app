@@ -4,9 +4,12 @@ import './SearchBox.css';
 import { AuthContext } from '../../context/AuthContext';
 import './Team.css';
 import { generateID } from '../Utils/generateID';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-function Team({open, handleClose, handleTeam}) {
+function Team({open, handleClose}) {
     const { user: currentUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
 
@@ -35,6 +38,8 @@ function Team({open, handleClose, handleTeam}) {
 
         setCheckedUserName([]);
         handleClose();
+        toast.success("Team created successfully!");
+        navigate("/team");
     }
 
     const style = {
@@ -60,7 +65,9 @@ function Team({open, handleClose, handleTeam}) {
                 <Typography id="modal-modal-title" variant="h5" sx={{ fontWeight: 700 }}>
                     Members
                 </Typography>
-                <Typography id="modal-modal-description" component={"form"} sx={{ mt: 2 }} onSubmit={handleTeamSubmit}>
+                {
+                    db.users.length > 1 ? (
+                        <Typography id="modal-modal-description" component={"form"} sx={{ mt: 2 }} onSubmit={handleTeamSubmit}>
                     <div className="form-group">
                         <label htmlFor="title">Team Name</label>
                         <input type="text" name="team" placeholder='Enter Team Name' onChange={(e)=>setTeamName(e.target.value)} required />
@@ -80,6 +87,8 @@ function Team({open, handleClose, handleTeam}) {
                         <input type="submit" value="Create" />
                     </div>
                 </Typography>
+                    ) : <h4>Not found any members for create team!</h4>
+                }
             </Box>
         </Modal>
     )

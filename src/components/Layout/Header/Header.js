@@ -34,7 +34,10 @@ function Header() {
             <Link to="/team">
                 <Button variant='outlined' color='inherit' sx={{fontWeight: "600"}}>Team</Button>
             </Link>
-            <div className="user"><img src={user.avatar} alt="" /></div>
+            <Link to={`/profile`} className="userInfo">
+                <div className="userImage"><img src={user.avatar} alt="" /></div>
+                <h6 className="userName">{user.username}</h6>
+            </Link>
             <div className="notification">
                 <Link to={`/invitation/${user.username}`}>
                     <Badge badgeContent={notification} color="error">

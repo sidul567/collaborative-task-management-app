@@ -8,7 +8,7 @@ function ProtectedRoute() {
     return (
     <>
         {
-            user === null ? <Navigate to="/login" /> : <Outlet />
+            user === null ? <Navigate to="/" /> : <Outlet />
         }
     </>
   )

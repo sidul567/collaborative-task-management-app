@@ -48,7 +48,7 @@ function Registration() {
     const registrationSubmit = async (e) => {
         e.preventDefault();
 
-        if(registrationInfo.password < 6){
+        if(registrationInfo.password.length < 6){
             setError("Password must be at least 6 character!");
             return;
         }else{
@@ -108,7 +108,7 @@ function Registration() {
                             <input type="submit" value="Sign Up" />
                         </div>
                         {error && <div className="error">{error}</div>}
-                        <p>Already have an account? <Link to="/login">Log In</Link></p>
+                        <p>Already have an account? <Link to="/">Log In</Link></p>
                     </form>
                 </div>
                 <div className="registrationImg">

@@ -29,8 +29,28 @@ nav .profile .user, nav .profile .logout{
     cursor: pointer;
 }
 
-nav img{
+nav .userInfo .userImage{
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    border: 2px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav .userInfo .userImage img{
+    width: 100%;
+    height: 100%;
+    padding: 3px;
+}
+
+nav .userInfo{
+    display: flex;
+    gap: 2px;
+    align-items: center;
+}
+
+nav .userInfo h6{
+    font-size: 14px;
 }

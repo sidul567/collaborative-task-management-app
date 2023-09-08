@@ -4,14 +4,15 @@ import React, { useContext, useEffect, useState } from 'react'
 import './SearchBox.css';
 import { AuthContext } from '../../context/AuthContext';
 import { generateID } from '../Utils/generateID';
+import { toast } from 'react-toastify';
 
-function Task({open, handleClose, getTask}) {
+function Task({open, handleClose, updateTaskID=""}) {
     const { user } = useContext(AuthContext);
     const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
     const tasks = db.tasks || [];
 
     const [task, setTask] = useState({
-        id: generateID(),
+        id: "",
         title: "",
         desc: "",
         due_date: "",
@@ -23,6 +24,20 @@ function Task({open, handleClose, getTask}) {
         },
         status: "Pending",
     })
+
+    useEffect(()=>{
+        const handleStorage = () => {
+            const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
+            if(updateTaskID){
+                setTask(db.tasks.find((task)=>task.id === updateTaskID));
+            }
+        }
+        window.addEventListener('storage', handleStorage)
+
+        handleStorage();
+
+        return () => window.removeEventListener('storage', handleStorage())
+    }, [updateTaskID])
 
     const style = {
         position: 'absolute',
@@ -47,18 +62,22 @@ function Task({open, handleClose, getTask}) {
 
     const handleTaskSubmit = (e)=>{
         e.preventDefault();
-        const updatedTasks = [...tasks, { ...task, id: generateID() }];
+        let updatedTasks;
+        if(updateTaskID){
+            updatedTasks = tasks.map((prevTask)=>{
+                if(prevTask.id === updateTaskID){
+                    return task;
+                }
+                return prevTask;
+            })
+        }else{
+            updatedTasks = [...tasks, { ...task, id: generateID(), createdBy: user.username }];
+        }
         localStorage.setItem("collaborative-management-app", JSON.stringify({ ...db, tasks: updatedTasks }));
         window.dispatchEvent(new Event('storage'));
         handleClose();
+        toast.success(updateTaskID ? "Task updated successfully!" : "Task added successfully!");
     }
-
-    useEffect(() => {
-        setTask((prevTask) => {
-            return { ...prevTask, createdBy: user && user.username }
-        })
-    }, [user])
-
 
     return (
         <Modal
@@ -74,19 +93,19 @@ function Task({open, handleClose, getTask}) {
                 <Typography id="modal-modal-description" component={"form"} sx={{ mt: 2 }} onSubmit={handleTaskSubmit}>
                     <div className="form-group">
                         <label htmlFor="title">Title</label>
-                        <input type="text" name="title" placeholder='Title' onChange={handleTask} required />
+                        <input type="text" name="title" value={task.title} placeholder='Title' onChange={handleTask} required />
                     </div>
                     <div className="form-group">
                         <label htmlFor="desc">Description</label>
-                        <input type="text" name="desc" placeholder='Description' onChange={handleTask} required />
+                        <input type="text" name="desc" placeholder='Description' value={task.desc} onChange={handleTask} required />
                     </div>
                     <div className="form-group">
                         <label htmlFor="due_date">Due Date</label>
-                        <input type="date" name="due_date" onChange={handleTask} required />
+                        <input type="date" name="due_date" value={task.due_date} onChange={handleTask} required />
                     </div>
                     <div className="form-group">
                         <label htmlFor="priority">Priority</label>
-                        <select name="priority" id="" onChange={handleTask} required defaultValue={""}>
+                        <select name="priority" id="" onChange={handleTask} required value={task.priority}>
                             <option value="" disabled>Select Priority</option>
                             <option value="High">High</option>
                             <option value="Medium">Medium</option>
@@ -94,7 +113,7 @@ function Task({open, handleClose, getTask}) {
                         </select>
                     </div>
                     <div className="form-submit">
-                        <input type="submit" value="Create" />
+                        <input type="submit" value={updateTaskID ? "Update" : "Create"} />
                     </div>
                 </Typography>
             </Box>

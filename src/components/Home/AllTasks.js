@@ -4,6 +4,7 @@ import { Delete, Edit, GroupAdd } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { AuthContext } from '../../context/AuthContext';
 import AssignMember from './AssignMember';
+import { Link } from 'react-router-dom';
 
 function AllTasks({status, sortBy, orderBy}) {
 
@@ -30,6 +31,8 @@ function AllTasks({status, sortBy, orderBy}) {
 
                 return (match && status === "All") || (match && task.status === status);
             }) || [];
+
+            console.log(sortBy);
 
             filteredTask.sort((task1, task2)=>{
                 const priority = {
@@ -73,18 +76,20 @@ function AllTasks({status, sortBy, orderBy}) {
             updateTaskStatus = "Pending"
         }
 
-        const updatedTasks = allTasks.map((task) =>
+        const updatedTasks = db?.tasks?.map((task) =>
             task.id === taskId ? { ...task, status: updateTaskStatus } : task
         );
-        setAllTasks(updatedTasks);
+        setAllTasks(allTasks.map((task) =>
+            task.id === taskId ? { ...task, status: updateTaskStatus } : task
+        ));
 
         localStorage.setItem("collaborative-management-app", JSON.stringify({ ...db, tasks: updatedTasks }));
     }
 
     const getTeamName = (teamID)=>{
         if(teamID){
-            const team = db.teams.find((team)=>team.teamID === teamID);
-            return team.teamName;
+            const team = db?.teams?.find((team)=>team.teamID === teamID);
+            return team?.teamName;
         }
         return "";
     }
@@ -101,7 +106,9 @@ function AllTasks({status, sortBy, orderBy}) {
 
     return (
         <>
-            <div className='tasks'>
+            {
+                allTasks.length > 0 ? (
+                    <div className='tasks'>
                 <h3>All Tasks</h3>
                 <table>
                     <thead>
@@ -144,8 +151,9 @@ function AllTasks({status, sortBy, orderBy}) {
                                         task.createdBy === user.username ? <td onClick={()=>handleOpenAssignMember(task.id)}><center><GroupAdd color='primary' /></center></td> : <td><center><GroupAdd color='disabled' /></center></td>
                                     }
                                     <td>
-                                        <Edit fontSize='small' />
-                                        <Delete fontSize='small' color='error' />
+                                        <Link to={`/task/${task.id}`}>
+                                            <Button color='info' variant='outlined' size='small'>Manage</Button>
+                                        </Link>
                                     </td>
                                 </tr>
                             ))
@@ -153,6 +161,10 @@ function AllTasks({status, sortBy, orderBy}) {
                     </tbody>
                 </table>
             </div>
+                ) : (
+                    <center><h1 style={{marginTop: "40px"}}>Not found any task!</h1></center>
+                )
+            }
             <AssignMember open={openAssignMember} handleClose={handleCloseAssignMember} taskID={taskID} />
         </>
     )

@@ -16,7 +16,7 @@ function TeamUpdate({open, handleClose, teamID}) {
     useEffect(()=>{
         const handleStorage = () => {
             const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
-            const team = db.teams.find((team)=>team.teamID === teamID) || {};
+            const team = db?.teams?.find((team)=>team?.teamID === teamID) || {};
             if(teamID){
                 setTeamName(team.teamName);
                 setUsers(db?.users?.filter((user)=>

@@ -14,7 +14,7 @@ export const AuthContextProvider = ({children})=>{
 
         if(currentUserName){
             const db = JSON.parse(localStorage.getItem("collaborative-management-app"));
-            setUser(db.users.find((user)=>user.username === currentUserName))
+            setUser(db?.users?.find((user)=>user?.username === currentUserName) || null);
         }
 
         setLoading(false);

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './SearchBox.css';
 import { AuthContext } from '../../context/AuthContext';
 import './Team.css';
+import { toast } from 'react-toastify';
 
 function AssignMember({ open, handleClose, taskID }) {
     const { user } = useContext(AuthContext);
@@ -89,6 +90,7 @@ function AssignMember({ open, handleClose, taskID }) {
         localStorage.setItem("collaborative-management-app", JSON.stringify({ ...db, tasks: updatedTasks }));
         window.dispatchEvent(new Event('storage'));
         handleClose();
+        toast.success("Member assigned successfully!");
     }
 
     return (
