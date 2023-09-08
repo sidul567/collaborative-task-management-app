@@ -5,6 +5,7 @@ import Login from './components/User/Login';
 import Home from './components/Home/Home';
 import ProtectedRoute from './components/Route/ProtectedRoute';
 import Invitation from './components/Invitation/Invitation';
+import MyTeam from './components/Team/MyTeam';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route exact path='/login' element={<Login />} />
             <Route exact path='/' element={<ProtectedRoute />}>
               <Route exact path='home' element={<Home />} />
+              <Route exact path='team' element={<MyTeam />} />
               <Route exact path='invitation/:username' element={<Invitation />} />
             </Route>
         </Routes>

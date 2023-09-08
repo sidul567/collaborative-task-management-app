@@ -17,7 +17,10 @@ function Task({open, handleClose, getTask}) {
         due_date: "",
         priority: "",
         createdBy: "",
-        assigned: [],
+        assigned: {
+            teamID: "",
+            members: [],
+        },
         status: "Processing",
     })
 
@@ -83,7 +86,7 @@ function Task({open, handleClose, getTask}) {
                     </div>
                     <div className="form-group">
                         <label htmlFor="priority">Priority</label>
-                        <select name="priority" id="" onChange={handleTask} required>
+                        <select name="priority" id="" onChange={handleTask} required defaultValue={""}>
                             <option value="" disabled>Select Priority</option>
                             <option value="High">High</option>
                             <option value="Medium">Medium</option>

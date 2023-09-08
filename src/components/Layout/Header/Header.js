@@ -2,7 +2,7 @@ import { Logout, Notifications } from '@mui/icons-material'
 import React, { useContext, useEffect, useState } from 'react'
 import './Header.css';
 import { AuthContext } from '../../../context/AuthContext';
-import { Badge } from '@mui/material';
+import { Badge, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 function Header() {
@@ -29,8 +29,11 @@ function Header() {
 
   return (
     <nav>
-        <h3>Collaborative Management System</h3>
+        <Link to="/home"><h3>Collaborative Management System</h3></Link>
         <div className="profile">
+            <Link to="/team">
+                <Button variant='outlined' color='inherit' sx={{fontWeight: "600"}}>Team</Button>
+            </Link>
             <div className="user"><img src={user.avatar} alt="" /></div>
             <div className="notification">
                 <Link to={`/invitation/${user.username}`}>

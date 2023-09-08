@@ -1,0 +1,53 @@
+.teams{
+    display: flex;
+    margin-top: 10px;
+    width: 80%;
+    margin: auto;
+    align-items: stretch;
+    gap: 20px;
+}
+
+.teams .team{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    max-height: 300px;
+    overflow-y: auto;
+    width: 300px;
+}
+
+.teams .team .member{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.team-name h3{
+    display: flex;
+    align-items: center;
+    color: #110095;
+    gap: 3px;
+}
+
+.teams .team h4{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.teams .team .info{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.teams .team .info h6{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.teams .team img{
+    width: 30px;
+}
